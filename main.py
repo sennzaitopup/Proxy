@@ -27,6 +27,8 @@ def check_proxy(proxy):
                 data = response.json()
                 country_name = data["country_name"]
                 return country_name
+            elif "country_name" not in response.text:
+                return False
             else:
                 return False
         else:
