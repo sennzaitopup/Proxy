@@ -1,5 +1,8 @@
 import requests
 import json
+from colorama import Fore, Back, Style, init
+
+init()
 
 def scrape():
     try:
@@ -39,6 +42,8 @@ def check_proxy(proxy):
 if __name__ == "__main__":
     for proxy in scrape():
         if check_proxy(proxy) == False:
-            print(f"[DEAD] {proxy}")
+            print(Fore.RED + f"[DEAD] {proxy}")
         else:
-            print(f"[LIVE] {proxy} - {check_proxy(proxy)}")
+            print(Fore.GREEN + f"[LIVE] {proxy} - {check_proxy(proxy)}")
+
+    Style.RESET_ALL
