@@ -1,4 +1,5 @@
 import requests
+import json
 
 def scrape():
     try:
@@ -16,11 +17,18 @@ def scrape():
         return e
 
 def check_proxy(proxy):
+
     try:
+
         # Use a simple GET request to check the proxy
-        response = requests.get('http://api.ipify.org/', proxies={"http": proxy, "https": proxy}, timeout=5)
+        response = requests.get(f'http://ipapi.com/ip_api.php?ip={str(proxy).split(':')[0]}', proxies={"http": proxy, "https": proxy}, timeout=5)
         if response.status_code == 200:
-            return True
+            if "country_name" in response.text:
+                data = response.json()
+                country_name = data["country_name"]
+                return country_name
+            else:
+                return False
         else:
             return False
     except requests.exceptions.RequestException as e:
@@ -28,7 +36,7 @@ def check_proxy(proxy):
 
 if __name__ == "__main__":
     for proxy in scrape():
-        if check_proxy(proxy):
-            print(f"[LIVE] {proxy}")
-        else:
+        if check_proxy(proxy) == False:
             print(f"[DEAD] {proxy}")
+        else:
+            print(f"[LIVE] {proxy} - {check_proxy(proxy)}")
