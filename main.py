@@ -4,6 +4,16 @@ from colorama import Fore, Back, Style, init
 
 init()
 
+def Banner():
+    print("""
+██████╗ ██████╗  ██████╗ ██╗  ██╗██╗   ██╗
+██╔══██╗██╔══██╗██╔═══██╗╚██╗██╔╝╚██╗ ██╔╝
+██████╔╝██████╔╝██║   ██║ ╚███╔╝  ╚████╔╝ 
+██╔═══╝ ██╔══██╗██║   ██║ ██╔██╗   ╚██╔╝  
+██║     ██║  ██║╚██████╔╝██╔╝ ██╗   ██║   
+╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
+        Update : 28-10-2024 """)
+
 def scrape():
     try:
         response = requests.get('https://api.proxyscrape.com/v2/', params={
@@ -40,6 +50,9 @@ def check_proxy(proxy):
         return False
 
 if __name__ == "__main__":
+
+    Banner()
+
     for proxy in scrape():
         if check_proxy(proxy) == False:
             print(Fore.RED + f"[DEAD] {proxy}")
